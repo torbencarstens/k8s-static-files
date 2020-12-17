@@ -148,7 +148,7 @@ data:
         access_log   /var/log/nginx/pic.access_log main;
         error_log    /var/log/nginx/pic.error_log;
         
-        location ~ /pic {
+        location ~ / {
           return 301 https://storage.googleapis.com/k8s-static-files/me.jpg;
         }
       }
