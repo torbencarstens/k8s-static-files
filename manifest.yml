@@ -34,6 +34,14 @@ spec:
           backend:
             serviceName: static-service
             servicePort: 60002
+    - host: zoom.carstens.tech
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            serviceName: static-service
+            servicePort: 60002
     - host: carstens.tech
       http:
         paths:
@@ -173,4 +181,16 @@ data:
           return 301 https://storage.googleapis.com/k8s-static-files/cv.pdf;
         }
       }
+
+      server {
+        listen       80;
+        server_name  zoom.carstens.tech;
+        access_log   /var/log/nginx/zoom.access_log main;
+        error_log    /var/log/nginx/zoom.error_log;
+        
+        location ~ / {
+          return 301 https://us02web.zoom.us/j/4159054473?pwd=UHhMMFkveGZQeDRrc0Z3YXB5TnlZQT09;
+        }
+      }
+
     }
