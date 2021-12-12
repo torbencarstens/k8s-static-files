@@ -6,6 +6,8 @@ deployment:
   imagePullPolicy: Always
   revisionHistoryLimit: 1
   replicas: 1
+  ports:
+  - 8080
   labels:
     app: static
   requests:
