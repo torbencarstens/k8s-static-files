@@ -1,0 +1,35 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_push_docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build the tagged Docker image
+        run: docker build -t ghcr.io/torbencarstens/k8s-static-files:${GITHUB_SHA} .
+      - name: Push the tagged Docker image
+        run: docker push ghcr.io/torbencarstens/k8s-static-files:${GITHUB_SHA}
+
+  deploy:
+    name: "Publish to k8s"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: update password in manifest.yml
+        run: sed -i -e "s#__TAG__#${GITHUB_SHA}#g" values.yaml
+      - name: install helm chart
+        uses: WyriHaximus/github-action-helm3@v2
+        with: 
+          exec: helm upgrade static-files . --install --namespace=static --atomic
+          kubeconfig: ${{ secrets.KUBECONFIG_RAW }}

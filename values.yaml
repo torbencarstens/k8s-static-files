@@ -1,0 +1,38 @@
+namespace: static
+
+deployment:
+  name: static
+  image: ghcr.io/torbencarstens/k8s-static-files:__TAG__
+  imagePullPolicy: Always
+  revisionHistoryLimit: 1
+  replicas: 1
+  labels:
+    app: static
+  requests:
+    cpu: 100m
+    memory: 100Mi
+  limit:
+    cpu: 300m
+    memory: 300Mi
+
+configmap:
+  nginx:
+    name: nginx-config
+
+service:
+  name: static
+  port: 8080
+  targetPort: 8080
+  appSelector: static
+
+  ingress:
+  root:
+    host: carstens.tech
+    secret: tls-static
+    issuer: letsencrypt-issuer-http
+    name: static
+  pic:
+    host: pic.carstens.tech
+    secret: tls-static-pic
+    issuer: letsencrypt-issuer-http
+    name: static-pic
