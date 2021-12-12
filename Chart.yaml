@@ -4,4 +4,5 @@ description: Deploy some static files
 type: application
 version: 0.1.0
 appVersion: "1.0.0"
-icon: https://carstens.tech/helm_icon.png
+icon: https://helm.sh/img/favicon-152.png
+
