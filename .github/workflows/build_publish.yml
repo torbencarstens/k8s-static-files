@@ -6,8 +6,22 @@ on:
       - master
 
 jobs:
+  lint:
+    name: "Publish to k8s"
+    runs-on: ubuntu-latest
+    needs: build_push_docker
+    steps:
+      - uses: actions/checkout@v1
+      - name: update password in manifest.yml
+        run: sed -i -e "s#__TAG__#${GITHUB_SHA}#g" values.yaml
+      - name: install helm chart
+        uses: WyriHaximus/github-action-helm3@v2
+        with:
+          exec: helm lint --strict
+
   build_push_docker:
     runs-on: ubuntu-latest
+    needs: lint
     steps:
       - uses: actions/checkout@v2
       - name: Login to GitHub Container Registry
