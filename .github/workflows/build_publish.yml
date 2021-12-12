@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    name: "Publish to k8s"
+    name: "helm lint"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
