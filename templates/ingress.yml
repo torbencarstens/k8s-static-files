@@ -12,15 +12,19 @@ spec:
   tls:
     - secretName: {{ .Values.ingress.secret }}
       hosts:
-      - {{ .Values.ingress.host }}
+      {{- range $host := .Values.ingress.hosts }}
+      - {{ $host }}
+      {{- end }}
   rules:
-  - host: {{ .Values.ingress.host }}
+  {{- range $host := .Values.ingress.hosts }}
+  - host: {{ $host }}
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.service.name }}
+            name: {{ $.Values.service.name }}
             port:
-              number: {{ .Values.service.port }}
+              number: {{ $.Values.service.port }}
+  {{- end }}

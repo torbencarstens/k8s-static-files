@@ -25,14 +25,10 @@ service:
   targetPort: 8080
   appSelector: static
 
-  ingress:
-  root:
-    host: carstens.tech
-    secret: tls-static
-    issuer: letsencrypt-issuer-http
-    name: static
-  pic:
-    host: pic.carstens.tech
-    secret: tls-static-pic
-    issuer: letsencrypt-issuer-http
-    name: static-pic
+ingress:
+  hosts:
+    - carstens.tech
+    - pic.carstens.tech
+  secret: tls-static
+  issuer: letsencrypt-issuer-http
+  name: static
