@@ -32,6 +32,7 @@ ingress:
     - carstens.tech
     - pic.carstens.tech
     - fs22.carstens.tech
+    - status.carstens.tech
   secret: tls-static
   issuer: letsencrypt-issuer-http
   name: static
