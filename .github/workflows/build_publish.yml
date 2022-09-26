@@ -29,7 +29,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: replace ZOOM_URL
-        run: sed -i 's/{{ ZOOM_URL }}/${{ secrets.ZOOM_URL }}/g' nginx.conf
+        run: sed -i 's#{{ ZOOM_URL }}#${{ secrets.ZOOM_URL }}#g' nginx.conf
       - name: Build the tagged Docker image
         run: docker build -t ghcr.io/torbencarstens/k8s-static-files:${GITHUB_SHA} .
       - name: Push the tagged Docker image
