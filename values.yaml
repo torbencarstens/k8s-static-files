@@ -35,7 +35,6 @@ ingress:
     - status.carstens.tech
     - calendar.carstens.tech
     - zoom.carstens.tech
-    - cv.carstens.tech
   secret: tls-static
   issuer: letsencrypt-issuer-http
   name: static
