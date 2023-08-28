@@ -36,5 +36,5 @@ ingress:
     - calendar.carstens.tech
     - zoom.carstens.tech
   secret: tls-static
-  issuer: letsencrypt-issuer-http
+  issuer: letsencrypt-issuer
   name: static
